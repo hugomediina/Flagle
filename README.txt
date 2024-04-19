@@ -1,4 +1,4 @@
-Este proyecto se realizó con la necesidad de crear un juego utilizable de forma constante.
+Este proyecto se realizó con la necesidad de crear un juego utilizable de forma constante, el código que leerás a continuación es correspondiente mi primera toma de contacto con Flask y la biblioteca PIL.
 Está basado en la página web "https://flagle-game.com/" con la misma temática.
 
 Para la realización de este proyecto se utilizarón para las fuentes de banderas y codes.json, la siguiente página web: "https://www.banderas-mundo.es/descargar"
