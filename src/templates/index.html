@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static',filename='estilo.css') }}" rel="stylesheet" type="text/css" >
+    <title>Flagle</title>
+</head>
+<body>
+    <h1>Flagle</h1>
+    <div class="container">
+        <img src="{{ url_for('static',filename='bandera.jpg') }}" alt="Bandera 1" height="250">
+        <form action="/submit" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <input list="paises" name="nombre_bandera" id="lista" placeholder="Escribe un país">
+                        <datalist id="paises">
+                          {% for pais in paises %}
+                          <option value="{{ pais }}">
+                          {% endfor %}
+                        </datalist>
+                    </td>
+                    <td><input type="submit" value="Adivinar"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
