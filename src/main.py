@@ -135,8 +135,6 @@ def submit():
                 x = codigo
                 break
         manager.actualizar_imagen(x)
-        # obtener el codigo a partir de el valor del devolver los valores
-
         return redirect(url_for('index'))
 
 
