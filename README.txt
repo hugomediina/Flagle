@@ -12,3 +12,5 @@ Tras esto se escoge un país dentro de todos los disponibles.
 Una vez creado esto se realiza una matriz con la imagen del pais escogido y otra con la seleccionada por el usuario.
 Se realiza una intersección y si existia un elemento anterior se realiza una union con la actual, hecho esto.
 Se pide al usuario añadir más opciones hasta que esta sea correcta.
+
+Gracias por leer y disfruta del código :D
