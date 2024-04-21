@@ -1,7 +1,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: black;
+    background-color:black;
     margin: 0;
     padding: 0;
 }
@@ -24,6 +24,24 @@ p{
 }
 
 .error-message img {
+    margin-right: 10px;
+}
+
+.congrats-message {
+    display: flex;
+    align-items: center;
+    color: green;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.66);
+    padding: 20px;
+    border-radius: 50px;
+    max-width: 550px;
+    margin: auto;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+.congrats-message img {
     margin-right: 10px;
 }
 

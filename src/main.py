@@ -33,16 +33,16 @@ class GestionBanderas:
         else:
             self.actual = suma_de_matrices(self.actual, union_banderas(self.guess, pais_intento))
         imagen = matriz_a_bandera(self.actual)
+        pais_intento_img = matriz_a_bandera(pais_intento)
         imagen.save("static/bandera.jpg")
+        pais_intento_img.save("static/last_try.jpg")
 
     def actualizar_tolerancia(self, nueva_tolerancia):
         self.tolerancia = nueva_tolerancia
-        print(self.tolerancia)
-
 
 def set_imagen_black():
     Image.new('RGB', (640, 488)).save('static/bandera.jpg')
-
+    Image.new('RGB', (640, 488)).save('static/last_try.jpg')
 
 def crear_matriz_colores(pais: str) -> Colores:
     i = Image.open("../img/all_flags/" + pais + ".jpg", 'r')
@@ -117,16 +117,11 @@ def suma_de_matrices(actual: Colores, guess: Colores):
     return suma_matriz
 
 
-manager = GestionBanderas()
-manager.escoger_pais()
-set_imagen_black()
 
-
-print(paises_data[manager.pais_a_adivinar])
 @app.route('/')
 def index():
     return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
-                           paises=NOMBRES_PAISES, tolerancia=manager.tolerancia)  # pais_adivinar no es necesario
+                           paises=NOMBRES_PAISES, tolerancia=manager.tolerancia,lasttry=url_for('static', filename='last_try.jpg'))
 
 
 @app.route('/submit', methods=['POST'])
@@ -134,20 +129,36 @@ def submit():
     if request.method == 'POST':
         intento = request.form['nombre_bandera']
         x = None
-        if intento in NOMBRES_PAISES:
+
+        if intento != paises_data[manager.pais_a_adivinar]:
+            if intento in NOMBRES_PAISES:
+                for codigo, nombre in paises_data.items():
+                    if nombre == intento:
+                        x = codigo
+                        break
+                manager.actualizar_imagen(x)
+            else:
+                message = 'El país ingresado no está en la lista.'
+                return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
+                                       paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, message=message)
+            nueva_tolerancia = int(request.form['tolerancia'])
+            manager.actualizar_tolerancia(nueva_tolerancia)
+            return redirect(url_for('index'))
+        else:
             for codigo, nombre in paises_data.items():
                 if nombre == intento:
                     x = codigo
                     break
             manager.actualizar_imagen(x)
-        else:
-            message = 'El país ingresado no está en la lista.'
+            congrats = 'Enhorabuena, has adivinado la bandera.'
             return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
-                                   paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, message=message)
-        nueva_tolerancia = int(request.form['tolerancia'])
-        manager.actualizar_tolerancia(nueva_tolerancia)
-        return redirect(url_for('index'))
+                                   paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, congrats=congrats)
 
 
 if __name__ == '__main__':
+    manager = GestionBanderas()
+    manager.escoger_pais()
+    set_imagen_black()
+
+    print(paises_data[manager.pais_a_adivinar])
     app.run()

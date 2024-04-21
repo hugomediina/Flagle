@@ -26,15 +26,28 @@
                 </tr>
             </table>
                 {% if message %}
-            <div class="error-message">
-            <img src="{{ url_for('static',filename='warning.png') }}" alt="Warning" height="50">
-            {{ message }}</div>
-    {% endif %}
+                    <div class="error-message">
+                    <img src="{{ url_for('static',filename='warning.png') }}" alt="Warning" height="50">
+                    {{ message }}
+                    </div>
+                {% endif %}
+                {% if congrats %}
+                    <div class="congrats-message">
+                    <img src="{{ url_for('static',filename='check.png') }}" alt="Check" height="50">
+                    {{ congrats }}
+                    </div>
+                {% endif %}
             </div>
             <div class="slider-container">
         <p >Dificultad</p>
         <input type="range" min="0" max="100" value="{{ tolerancia }}" class="slider" id="mySlider" name="tolerancia">
      </div>
+            {% if lasttry %}
+            <div class="last-try">
+                <p>Último Intento:</p>
+                <img src="{{lasttry}}" alt="Último-intento" height="200">
+            </div>
+        {% endif %}
         </form>
     </div>
 
