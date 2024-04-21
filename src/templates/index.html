@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static',filename='estilo.css') }}" rel="stylesheet" type="text/css" >
-    <title>Flagle</title>
+    <title>Flagle en Español</title>
 </head>
 <body>
-    <h1>Flagle</h1>
-    <div class="container">
-        <img src="{{ url_for('static',filename='bandera.jpg') }}" alt="Bandera 1" height="250">
+    <h1>Flagle en Español</h1>
+    <div>
         <form action="/submit" method="post">
+            <div class="container">
+            <img src="{{ url_for('static',filename='bandera.jpg') }}" alt="Bandera 1" height="250">
             <table>
                 <tr>
                     <td>
@@ -24,7 +25,18 @@
                     <td><input type="submit" value="Adivinar"></td>
                 </tr>
             </table>
+                {% if message %}
+            <div class="error-message">
+            <img src="{{ url_for('static',filename='warning.png') }}" alt="Warning" height="50">
+            {{ message }}</div>
+    {% endif %}
+            </div>
+            <div class="slider-container">
+        <p >Dificultad</p>
+        <input type="range" min="0" max="100" value="{{ tolerancia }}" class="slider" id="mySlider" name="tolerancia">
+     </div>
         </form>
     </div>
+
 </body>
 </html>

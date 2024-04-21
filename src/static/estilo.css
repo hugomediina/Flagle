@@ -1,11 +1,30 @@
 
-/* estilo.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: black;
     margin: 0;
     padding: 0;
+}
+p{
+    color:white;
+    text-align:center;
+}
+.error-message {
+    display: flex;
+    align-items: center;
+    color: red;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.66);
+    padding: 20px;
+    border-radius: 50px;
+    max-width: 550px;
+    margin: auto;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+.error-message img {
+    margin-right: 10px;
 }
 
 .container {
@@ -61,4 +80,38 @@ datalist {
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 50px;
+}
+.slider-container {
+    width: 300px;
+    margin: 50px auto;
+}
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+.slider:hover {
+    opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4caf50;
+    cursor: pointer;
+}
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4caf50;
+    cursor: pointer;
 }

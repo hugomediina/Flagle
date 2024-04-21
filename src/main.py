@@ -8,7 +8,6 @@ from flask import Flask, url_for, render_template, request, redirect
 app = Flask(__name__)
 
 Colores = [(int, int, int)]
-tolerancia = 30
 with open('../lib/codes.json', 'r', encoding='utf-8') as f:
     paises_data = json.load(f)
 
@@ -21,6 +20,7 @@ class GestionBanderas:
         self.guess = None
         self.actual = None
         self.pais_a_adivinar = None
+        self.tolerancia = 45
 
     def escoger_pais(self):
         self.pais_a_adivinar = random.choice(PAISES)
@@ -34,6 +34,10 @@ class GestionBanderas:
             self.actual = suma_de_matrices(self.actual, union_banderas(self.guess, pais_intento))
         imagen = matriz_a_bandera(self.actual)
         imagen.save("static/bandera.jpg")
+
+    def actualizar_tolerancia(self, nueva_tolerancia):
+        self.tolerancia = nueva_tolerancia
+        print(self.tolerancia)
 
 
 def set_imagen_black():
@@ -71,12 +75,12 @@ def matriz_a_bandera(matriz: Colores):
 
 
 def union_banderas(matriz_inicio: Colores, matriz_guess: Colores) -> Colores:
-    def colores_similares(color1, color2, tolerancia=30):
+    def colores_similares(color1, color2):
         r1, g1, b1 = color1
         r2, g2, b2 = color2
 
         distancia_color = ((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2) ** 0.5
-        return distancia_color <= tolerancia
+        return distancia_color <= manager.tolerancia
 
     alto1, ancho1 = len(matriz_inicio), len(matriz_inicio[0])
     alto2, ancho2 = len(matriz_guess), len(matriz_guess[0])
@@ -94,7 +98,7 @@ def union_banderas(matriz_inicio: Colores, matriz_guess: Colores) -> Colores:
                 color1 = matriz_inicio[y][x]
             if 0 <= y < alto2 and 0 <= x < ancho2:
                 color2 = matriz_guess[y][x]
-            if colores_similares(color1, color2, tolerancia):
+            if colores_similares(color1, color2):
                 matriz_nueva[y][x] = color1
     return matriz_nueva
 
@@ -122,7 +126,7 @@ print(paises_data[manager.pais_a_adivinar])
 @app.route('/')
 def index():
     return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
-                           paises=NOMBRES_PAISES)  # pais_adivinar no es necesario
+                           paises=NOMBRES_PAISES, tolerancia=manager.tolerancia)  # pais_adivinar no es necesario
 
 
 @app.route('/submit', methods=['POST'])
@@ -130,11 +134,18 @@ def submit():
     if request.method == 'POST':
         intento = request.form['nombre_bandera']
         x = None
-        for codigo, nombre in paises_data.items():
-            if nombre == intento:
-                x = codigo
-                break
-        manager.actualizar_imagen(x)
+        if intento in NOMBRES_PAISES:
+            for codigo, nombre in paises_data.items():
+                if nombre == intento:
+                    x = codigo
+                    break
+            manager.actualizar_imagen(x)
+        else:
+            message = 'El país ingresado no está en la lista.'
+            return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
+                                   paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, message=message)
+        nueva_tolerancia = int(request.form['tolerancia'])
+        manager.actualizar_tolerancia(nueva_tolerancia)
         return redirect(url_for('index'))
 
 
