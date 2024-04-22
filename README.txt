@@ -2,7 +2,7 @@ Este proyecto se realizó con la necesidad de crear un juego utilizable de forma
 Está basado en la página web "https://flagle-game.com/" con la misma temática.
 
 Para la realización de este proyecto se utilizarón para las fuentes de banderas y codes.json, la siguiente página web: "https://www.banderas-mundo.es/descargar"
-Además, se utilizarón tanto la biblioteca PIL, para el tratamiento de imágenes, como Flask, para la conexión entre las vistas y el código principal
+Además, se utilizarón tanto la biblioteca PIL, para el tratamiento de imágenes, como Flask, para la conexión entre las vistas y el código principal.
 Antes de explicar el código se ha de comentar que para que hubiera un correcto funcionamiento del programa, se realizó un programa que cambia de tamaño la resolución de estas para que todas tengan una similar o igual.
 
 El código funciona de la siguiente manera:
