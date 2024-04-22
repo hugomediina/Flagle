@@ -40,9 +40,11 @@ class GestionBanderas:
     def actualizar_tolerancia(self, nueva_tolerancia):
         self.tolerancia = nueva_tolerancia
 
+
 def set_imagen_black():
     Image.new('RGB', (640, 488)).save('static/bandera.jpg')
     Image.new('RGB', (640, 488)).save('static/last_try.jpg')
+
 
 def crear_matriz_colores(pais: str) -> Colores:
     i = Image.open("../img/all_flags/" + pais + ".jpg", 'r')
@@ -117,11 +119,11 @@ def suma_de_matrices(actual: Colores, guess: Colores):
     return suma_matriz
 
 
-
 @app.route('/')
 def index():
     return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
-                           paises=NOMBRES_PAISES, tolerancia=manager.tolerancia,lasttry=url_for('static', filename='last_try.jpg'))
+                           paises=NOMBRES_PAISES, tolerancia=manager.tolerancia,
+                           lasttry=url_for('static', filename='last_try.jpg'))
 
 
 @app.route('/submit', methods=['POST'])
@@ -150,7 +152,7 @@ def submit():
                     x = codigo
                     break
             manager.actualizar_imagen(x)
-            congrats = 'Enhorabuena, has adivinado la bandera.'
+            congrats = 'Enhorabuena, has adivinado la bandera: \n '+ paises_data[manager.pais_a_adivinar]
             return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
                                    paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, congrats=congrats)
 
