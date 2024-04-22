@@ -1,5 +1,4 @@
-*Flagle*
-
+Flagle En Español
 Este proyecto se realizó con la necesidad de crear un juego reutilizable, el código que leerás a continuación es correspondiente mi primera toma de contacto con Flask y la biblioteca PIL.
 Está basado en la página web "https://flagle-game.com/" con la misma temática.
 
