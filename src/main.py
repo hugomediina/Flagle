@@ -42,6 +42,15 @@ class GestionBanderas:
 
 
 def set_imagen_black():
+    try:
+        os.remove('static/bandera.jpg')
+    except FileNotFoundError:
+        pass
+
+    try:
+        os.remove('static/last_try.jpg')
+    except FileNotFoundError:
+        pass
     Image.new('RGB', (640, 488)).save('static/bandera.jpg')
     Image.new('RGB', (640, 488)).save('static/last_try.jpg')
 
@@ -153,8 +162,17 @@ def submit():
                     break
             manager.actualizar_imagen(x)
             congrats = 'Enhorabuena, has adivinado la bandera: \n '+ paises_data[manager.pais_a_adivinar]
-            return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
+            return render_template('win.html', pais_adivinar=manager.pais_a_adivinar,
                                    paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, congrats=congrats)
+
+@app.route('/restart', methods=['GET'])
+def restart():
+    manager = GestionBanderas()
+    manager.escoger_pais()
+    set_imagen_black()
+
+    print(paises_data[manager.pais_a_adivinar])
+    return render_template(url_for('index'))
 
 
 if __name__ == '__main__':

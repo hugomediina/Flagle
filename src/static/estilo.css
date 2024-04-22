@@ -9,6 +9,10 @@ p{
     color:white;
     text-align:center;
 }
+.r{
+
+    margin-top:2px;
+}
 .error-message {
     display: flex;
     align-items: center;
@@ -72,8 +76,16 @@ h1 {
     color: white;
     text-align:center;
     font-size: bigger;
+    margin:0;
 }
-
+.container-header {
+    padding: 20px;
+    border-radius: 50px;
+    max-width: 550px;
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+}
 table {
     margin:auto;
     text-align:center;
