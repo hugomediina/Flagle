@@ -7,9 +7,15 @@ Para este proyecto, se utilizaron como fuentes de banderas y codes.json el sitio
 
 El funcionamiento del código es el siguiente:
 
-Se crea una imagen en blanco con la resolución de todas las banderas disponibles.
-Se elige aleatoriamente un país entre todos los disponibles.
-Se crea una matriz con la imagen del país seleccionado y otra con la imagen seleccionada por el usuario.
-Se realiza una intersección y, si ya existe un elemento anterior, se realiza una unión con la matriz actual.
-Se solicita al usuario que agregue más opciones hasta que la selección sea correcta.
+1.Se crea una imagen en blanco con la resolución de todas las banderas disponibles.
+
+2.Se elige aleatoriamente un país entre todos los disponibles.
+
+3.Se crea una matriz con la imagen del país seleccionado y otra con la imagen seleccionada por el usuario.
+
+4.Se realiza una intersección y, si ya existe un elemento anterior, se realiza una unión con la matriz actual.
+
+5.Se solicita al usuario que agregue más opciones hasta que la selección sea correcta.
+
+
 ¡Gracias por leer y disfruta del código! 😄
