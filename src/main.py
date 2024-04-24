@@ -40,6 +40,8 @@ class GestionBanderas:
     def actualizar_tolerancia(self, nueva_tolerancia):
         self.tolerancia = nueva_tolerancia
 
+    def hacer_actual_negro(self):
+        self.actual=None
 
 def set_imagen_black():
     try:
@@ -167,12 +169,12 @@ def submit():
 
 @app.route('/restart', methods=['GET'])
 def restart():
-    manager = GestionBanderas()
     manager.escoger_pais()
+    manager.hacer_actual_negro()
     set_imagen_black()
 
     print(paises_data[manager.pais_a_adivinar])
-    return render_template(url_for('index'))
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

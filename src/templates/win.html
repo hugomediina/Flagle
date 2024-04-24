@@ -11,32 +11,13 @@
         <h1>Flagle En Español</h1>
         <form action="/restart" method="get" style="display: inline;">
         <input class="r" type="submit" value="Volver a jugar">
-    </form>
+        </form>
 
     </div>
     <div>
         <form method="post">
             <div class="container">
             <img src="{{ url_for('static',filename='bandera.jpg') }}" alt="Bandera 1" height="250">
-            <table>
-                <tr>
-                    <td>
-                        <input list="paises" name="nombre_bandera" id="lista" placeholder="Escribe un país">
-                        <datalist id="paises">
-                          {% for pais in paises %}
-                          <option value="{{ pais }}">
-                          {% endfor %}
-                        </datalist>
-                    </td>
-                    <td><input type="submit" value="Adivinar"></td>
-                </tr>
-            </table>
-                {% if message %}
-                    <div class="error-message">
-                    <img src="{{ url_for('static',filename='warning.png') }}" alt="Warning" height="50">
-                    {{ message }}
-                    </div>
-                {% endif %}
                 {% if congrats %}
                     <div class="congrats-message">
                     <img src="{{ url_for('static',filename='check.png') }}" alt="Check" height="50">
@@ -44,10 +25,6 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="slider-container">
-        <p >Dificultad</p>
-        <input type="range" min="1" max="100" value="{{ tolerancia }}" class="slider" id="mySlider" name="tolerancia">
-     </div>
         </form>
     </div>
 
