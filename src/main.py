@@ -8,8 +8,8 @@ from flask import Flask, url_for, render_template, request, redirect
 app = Flask(__name__)
 
 Colores = [(int, int, int)]
-with open('../lib/codes.json', 'r', encoding='utf-8') as f:
-    paises_data = json.load(f)
+with open('../lib/codes.json', 'r', encoding='utf-8') as file:
+    paises_data = json.load(file)
 
 NOMBRES_PAISES = list(paises_data.values())
 PAISES = [pais[:-len(".jpg")] for pais in os.listdir("../img/original_flags")]
@@ -132,19 +132,21 @@ def suma_de_matrices(actual: Colores, guess: Colores):
 
 @app.route('/')
 def index():
-    return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
+    return render_template('index.html',
                            paises=NOMBRES_PAISES, tolerancia=manager.tolerancia,
                            lasttry=url_for('static', filename='last_try.jpg'))
 
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    global NOMBRES_PAISES
     if request.method == 'POST':
         intento = request.form['nombre_bandera']
         x = None
 
         if intento != paises_data[manager.pais_a_adivinar]:
             if intento in NOMBRES_PAISES:
+                NOMBRES_PAISES.remove(intento)
                 for codigo, nombre in paises_data.items():
                     if nombre == intento:
                         x = codigo
@@ -152,8 +154,7 @@ def submit():
                 manager.actualizar_imagen(x)
             else:
                 message = 'El país ingresado no está en la lista.'
-                return render_template('index.html', pais_adivinar=manager.pais_a_adivinar,
-                                       paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, message=message)
+                return render_template('index.html', paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, message=message)
             nueva_tolerancia = int(request.form['tolerancia'])
             manager.actualizar_tolerancia(nueva_tolerancia)
             return redirect(url_for('index'))
@@ -162,13 +163,15 @@ def submit():
                 if nombre == intento:
                     x = codigo
                     break
-            manager.actualizar_imagen(x)
-            congrats = 'Enhorabuena, has adivinado la bandera: \n '+ paises_data[manager.pais_a_adivinar]
-            return render_template('win.html', pais_adivinar=manager.pais_a_adivinar,
-                                   paises=NOMBRES_PAISES, tolerancia=manager.tolerancia, congrats=congrats)
+            respuesta = Image.open("../img/all_flags/" + x + ".jpg", 'r')
+            respuesta.save("static/bandera.jpg")
+            congrats = 'Enhorabuena, has adivinado la bandera: \n'+ paises_data[manager.pais_a_adivinar]
+            return render_template('win.html', pais_adivinar=manager.pais_a_adivinar, congrats=congrats)
 
 @app.route('/restart', methods=['GET'])
 def restart():
+    global NOMBRES_PAISES
+    NOMBRES_PAISES = list(paises_data.values())
     manager.escoger_pais()
     manager.hacer_actual_negro()
     set_imagen_black()
