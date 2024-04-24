@@ -7,6 +7,7 @@
     <title>Flagle en Español</title>
 </head>
 <body>
+
     <div class="container-header">
         <h1>Flagle En Español</h1>
         <form action="/restart" method="get" style="display: inline;">
@@ -14,19 +15,17 @@
         </form>
 
     </div>
-    <div>
-        <form method="post">
-            <div class="container">
-            <img src="{{ url_for('static',filename='bandera.jpg') }}" alt="Bandera 1" height="250">
-                {% if congrats %}
-                    <div class="congrats-message">
-                    <img src="{{ url_for('static',filename='check.png') }}" alt="Check" height="50">
-                    {{ congrats }}
-                    </div>
-                {% endif %}
+
+    <div class="container">
+    <img src="{{ url_for('static',filename='bandera.jpg') }}" alt="Bandera 1" height="250">
+        {% if congrats %}
+            <div class="congrats-message">
+            <img src="{{ url_for('static',filename='check.png') }}" alt="Check" height="50">
+            {{ congrats }}
             </div>
-        </form>
+        {% endif %}
     </div>
+
 
 </body>
 </html>
